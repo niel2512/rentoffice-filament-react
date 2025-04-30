@@ -76,9 +76,10 @@ class BookingTransactionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('booking_trx_id')
-                ->searchable(),
                 TextColumn::make('name')
+                ->searchable(),
+                
+                TextColumn::make('booking_trx_id')
                 ->searchable(),
 
                 TextColumn::make('officeSpace.name'),
