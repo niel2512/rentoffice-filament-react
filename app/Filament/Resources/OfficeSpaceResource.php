@@ -2,16 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OfficeSpaceResource\Pages;
-use App\Filament\Resources\OfficeSpaceResource\RelationManagers;
-use App\Models\OfficeSpace;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\OfficeSpace;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\OfficeSpaceResource\Pages;
+use App\Filament\Resources\OfficeSpaceResource\RelationManagers;
+use Dom\Text;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 
 class OfficeSpaceResource extends Resource
 {
@@ -23,7 +33,70 @@ class OfficeSpaceResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                ->required()
+                ->maxlength(255),     
+
+                TextInput::make('address')
+                ->required()
+                ->maxlength(64),     
+                
+                FileUpload::make('thumbnail')
+                ->required()
+                ->image(),
+
+                Textarea::make('about')
+                ->required()
+                ->rows(10)
+                ->cols(20),
+
+                //diambil dari model office space di public function photos
+                Repeater::make('photos')
+                ->relationship('photos') 
+                ->schema([
+                    FileUpload::make('photo')
+                    ->required()
+                    ->image(),
+                ]),
+
+                //diambil dari model office space di public function benefits
+                Repeater::make('benefits')
+                ->relationship('benefits')
+                ->schema([
+                    TextInput::make('name')
+                    ->label('Benefit')
+                    ->required(),
+                ]),
+
+                Select::make('city_id')
+                ->relationship('city', 'name')
+                ->preload()
+                ->required()
+                ->searchable(),
+
+                TextInput::make('price')
+                ->required()
+                ->numeric()
+                ->prefix('Rp'),
+
+                TextInput::make('duration')
+                ->required()
+                ->numeric()
+                ->prefix('Days'),
+
+                Select::make('is_open')
+                ->options([
+                    true=> 'Open',
+                    false=> 'Closed',
+                ])
+                ->required(),
+
+                Select::make('is_full_booked')
+                ->options([
+                    true=> 'Not Available',
+                    false=> 'Available',
+                ])
+                ->required(),
             ]);
     }
 
@@ -31,10 +104,25 @@ class OfficeSpaceResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                ->searchable(),
+
+                ImageColumn::make('thumbnail')->label('Gambar'),
+
+                TextColumn::make('city.name'),
+
+                IconColumn::make('is_full_booked')
+                ->boolean()
+                ->trueColor('danger')
+                ->falseColor('success')
+                ->label('Available')
+                ->trueIcon('heroicon-o-x-circle')
+                ->falseIcon('heroicon-o-check-circle'),
             ])
             ->filters([
-                //
+                SelectFilter::make('city_id')
+                ->label('City')
+                ->relationship('city', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
