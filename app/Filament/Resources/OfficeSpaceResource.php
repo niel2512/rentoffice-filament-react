@@ -28,6 +28,8 @@ class OfficeSpaceResource extends Resource
 
     protected static ?string $navigationGroup = 'Main Menu';
 
+    protected static ?string $breadcrumb = 'Kantor';
+
     public static function form(Form $form): Form
     {
         return $form
