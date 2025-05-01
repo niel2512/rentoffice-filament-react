@@ -27,6 +27,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->font('Poppins')
+            // ->brandLogo(asset('img/icon.png'))
+            ->brandName('Rent Office Admin')
+            ->favicon(asset('img/icon.png')) //diambil di public/img
             ->colors([
                 'primary' => Color::Amber,
             ])
