@@ -28,6 +28,8 @@ class BookingTransactionResource extends Resource
     protected static ?string $navigationLabel = 'Transaksi Pemesanan';
 
     protected static ?string $navigationGroup = 'Main Menu';
+    
+    protected static ?string $breadcrumb = 'Transaksi Pemesanan';
 
     public static function form(Form $form): Form
     {
