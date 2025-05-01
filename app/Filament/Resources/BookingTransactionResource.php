@@ -25,6 +25,10 @@ class BookingTransactionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
+    protected static ?string $navigationLabel = 'Transaksi Pemesanan';
+
+    protected static ?string $navigationGroup = 'Main Menu';
+
     public static function form(Form $form): Form
     {
         return $form

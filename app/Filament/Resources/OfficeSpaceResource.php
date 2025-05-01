@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -11,23 +10,23 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\OfficeSpaceResource\Pages;
-use App\Filament\Resources\OfficeSpaceResource\RelationManagers;
-use Dom\Text;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
+use App\Filament\Resources\OfficeSpaceResource\Pages;
 
 class OfficeSpaceResource extends Resource
 {
     protected static ?string $model = OfficeSpace::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
+    
+    protected static ?string $navigationLabel = 'Kantor';
+
+    protected static ?string $navigationGroup = 'Main Menu';
 
     public static function form(Form $form): Form
     {
