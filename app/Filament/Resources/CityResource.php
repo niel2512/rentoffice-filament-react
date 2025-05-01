@@ -26,6 +26,8 @@ class CityResource extends Resource
 
     protected static ?string $navigationGroup = 'Main Menu';
 
+    protected static ?string $breadcrumb = 'Kota';
+
     public static function form(Form $form): Form
     {
         return $form
