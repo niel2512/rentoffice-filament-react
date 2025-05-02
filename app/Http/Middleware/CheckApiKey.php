@@ -16,13 +16,13 @@ class CheckApiKey
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $apiKey = $request->header('X-API-Key'); // Get the API key from the request header
+        $apiKey = $request->header('X-API-KEY'); // Get the API key from the request header
 
         // Check if the API key is present and valid
         // If the API key is not present or invalid, return a 401 Unauthorized response
         // If the API key is present, check if it exists in the database
-        if ($apiKey || !ApiKey::where('key', $apiKey)->exists()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$apiKey || !ApiKey::where('key', $apiKey)->exists()) { //typo apikey😊 (kurang tanda seru)
+            return response()->json(['message!' => 'Unauthorized'], 401);
         }
         
         return $next($request);
